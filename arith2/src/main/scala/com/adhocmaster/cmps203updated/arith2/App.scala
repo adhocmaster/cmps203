@@ -18,6 +18,8 @@ object App {
     TestExpressionFromSlidesMirrored
     TestMod
     TestModByZero
+    TestInc
+    TestInc2
 
   }
 
@@ -195,4 +197,51 @@ object App {
 
   }
 
+  def TestInc() {
+
+    println( "\nTest: TestInc with expression: (++3 + 5) * 2 " )
+
+    val root = new AST.BinaryOperatorNode( AST.Operations.Mul )
+
+    var sum = new AST.BinaryOperatorNode( AST.Operations.Add )
+
+    var inc = new AST.UnaryOperatorNode( AST.Operations.Inc )
+
+    inc.setOperand( new AST.NumeralNode( 3 ) )
+
+    sum.setLeft( inc )
+    sum.setRight( new AST.NumeralNode( 5 ) )
+
+    root.setLeft( sum )
+    root.setRight( new AST.NumeralNode( 2 ) )
+
+    println( "Result: " + Interpreter.eval( root ) )
+
+    assert( Interpreter.eval( root ) == 18 )
+
+  }
+
+  def TestInc2() {
+
+    println( "\nTest: TestInc2 with expression: ++(4 * 5) * 2 " )
+
+    val root = new AST.BinaryOperatorNode( AST.Operations.Mul )
+
+    var mul = new AST.BinaryOperatorNode( AST.Operations.Mul )
+
+    var inc = new AST.UnaryOperatorNode( AST.Operations.Inc )
+
+    mul.setLeft( new AST.NumeralNode( 4 ) )
+    mul.setRight( new AST.NumeralNode( 5 ) )
+
+    inc.setOperand( mul )
+
+    root.setLeft( inc )
+    root.setRight( new AST.NumeralNode( 2 ) )
+
+    println( "Result: " + Interpreter.eval( root ) )
+
+    assert( Interpreter.eval( root ) == 42 )
+
+  }
 }

@@ -7,8 +7,22 @@ object Interpreter {
     if ( node == AST.DummyNode )
       throw new Exception( "Incomplete AST" )
 
-    if ( node.isTerminal == true )
-      return node.asInstanceOf[AST.NumeralNode].value
+    node match {
+
+      case _: AST.NumeralNode => {
+        return node.asInstanceOf[AST.NumeralNode].value
+      }
+      case _: AST.BinaryOperatorNode => {
+        evalAsBinary( node )
+      }
+      case _: AST.UnaryOperatorNode => {
+        evalAsUnary( node )
+      }
+    }
+
+  }
+
+  def evalAsBinary( node: AST.Node ): Int = {
 
     var binaryNode = node.asInstanceOf[AST.BinaryOperatorNode]
     val leftVal = eval( binaryNode.left.getOrElse( AST.DummyNode ) )
@@ -21,6 +35,17 @@ object Interpreter {
       case AST.Operations.Mod => leftVal % rightVal
 
     }
+  }
 
+  def evalAsUnary( node: AST.Node ): Int = {
+
+    var unaryNode = node.asInstanceOf[AST.UnaryOperatorNode]
+    val operand = eval( unaryNode.operand.getOrElse( AST.DummyNode ) )
+
+    return unaryNode.value match {
+
+      case AST.Operations.Inc => return operand + 1
+
+    }
   }
 }

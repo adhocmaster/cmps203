@@ -5,7 +5,14 @@
 1. Import project to a eclipse IDE having the Scala extension installed
 2. Run App.Scala as a "Scala Application"
 
+# Added features:
+
+1. Mod, a binary operator
+2. Inc, a unary operator
+
 # Here goes the test report:
+
+Arith AST and Interpreter in Scala by Golam Md Muktadir. Both the fail and success cases added.
 
 Arith AST and Interpreter in Scala by Golam Md Muktadir
 
@@ -38,3 +45,9 @@ Result: 1
 
 Test: TestModByZero with expression: 5 % 0 
 Error: / by zero
+
+Test: TestInc with expression: (++3 + 5) * 2 
+Result: 18
+
+Test: TestInc2 with expression: ++(4 * 5) * 2 
+Result: 42
