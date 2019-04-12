@@ -1,3 +1,10 @@
+###  Source package: com.adhocmaster.cmps203updated.arith2
+
+# How to run:
+
+1. Import project to a eclipse IDE having the Scala extension installed
+2. Run App.Scala as a "Scala Application"
+
 # Here goes the test report:
 
 Arith AST and Interpreter in Scala by Golam Md Muktadir
