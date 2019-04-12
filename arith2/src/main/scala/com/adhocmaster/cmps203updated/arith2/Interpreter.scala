@@ -18,6 +18,7 @@ object Interpreter {
 
       case AST.Operations.Add => leftVal + rightVal
       case AST.Operations.Mul => leftVal * rightVal
+      case AST.Operations.Mod => leftVal % rightVal
 
     }
 

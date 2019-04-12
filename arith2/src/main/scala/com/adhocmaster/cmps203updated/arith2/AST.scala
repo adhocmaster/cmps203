@@ -4,7 +4,7 @@ object AST {
 
   object Operations extends Enumeration {
 
-    val Add, Mul = Value
+    val Add, Mul, Mod = Value
 
   }
 

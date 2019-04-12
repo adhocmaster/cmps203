@@ -16,6 +16,8 @@ object App {
     TestMul
     TestExpressionFromSlides
     TestExpressionFromSlidesMirrored
+    TestMod
+    TestModByZero
 
   }
 
@@ -100,16 +102,16 @@ object App {
 
   def TestMul() {
 
-    println( "\nTest: TestAdd with expression: 5 + 7" )
+    println( "\nTest: TestAdd with expression: 5 * (-7)" )
 
     val root = new AST.BinaryOperatorNode( AST.Operations.Mul )
 
     root.setLeft( new AST.NumeralNode( 5 ) )
-    root.setRight( new AST.NumeralNode( 7 ) )
+    root.setRight( new AST.NumeralNode( -7 ) )
 
     println( "Result: " + Interpreter.eval( root ) )
 
-    assert( Interpreter.eval( root ) == 35 )
+    assert( Interpreter.eval( root ) == -35 )
 
   }
 
@@ -154,6 +156,42 @@ object App {
     println( "Result: " + Interpreter.eval( root ) )
 
     assert( Interpreter.eval( root ) == 32 )
+
+  }
+
+  def TestMod() {
+
+    println( "\nTest: TestMod with expression: 5 % 2 " )
+
+    val root = new AST.BinaryOperatorNode( AST.Operations.Mod )
+
+    root.setLeft( new AST.NumeralNode( 5 ) )
+    root.setRight( new AST.NumeralNode( 2 ) )
+
+    println( "Result: " + Interpreter.eval( root ) )
+
+    assert( Interpreter.eval( root ) == 1 )
+
+  }
+
+  def TestModByZero() {
+
+    println( "\nTest: TestModByZero with expression: 5 % 0 " )
+
+    val root = new AST.BinaryOperatorNode( AST.Operations.Mod )
+
+    root.setLeft( new AST.NumeralNode( 5 ) )
+    root.setRight( new AST.NumeralNode( 0 ) )
+
+    try {
+
+      println( "Result: " + Interpreter.eval( root ) )
+
+    } catch {
+
+      case e: ArithmeticException => println( "Error: " + e.getMessage )
+
+    }
 
   }
 
