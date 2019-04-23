@@ -6,7 +6,7 @@ data E = IntExp Int
         | SubExp E E
         | MulExp E E
 
-data B = True | False
+data B = BoolExp Bool
         | EQExp E E
         | OrdExp E E
         | NotExp B
