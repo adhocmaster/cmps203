@@ -1,8 +1,13 @@
 module AST where 
-import Data.Map as Map
-import Data.Void
+        
+import Data.Map (Map, (!))
+import qualified Data.Map as Map
 
-type S = Map.Map String Int
+import qualified Data.Void as Void
+
+import Data.Maybe as Maybe
+
+type State = Map.Map String Int
 type Var = String
 
 data E = IntExp Int
@@ -19,7 +24,7 @@ data B = BoolExp Bool
         | OrExp B B
 
 
-data C = Skip Void
+data C = Skip Bool
         | Assign Var E
         | Seq C C
         | If B C C
