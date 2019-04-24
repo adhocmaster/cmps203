@@ -1,10 +1,10 @@
-# While in Haskell
+# Languages: While in Haskell, Arith in Scala (HW1)
 
-# Added feature: RemExp (remainder) and IncExp (Increment operator)
+## Added feature: RemExp (remainder) and IncExp (Increment operator)
 
-# Test File: test.hs
+## Test File: test.hs
 
-# Comprehensive Test Cases: (All from test.hs plus some more to test in console)
+## Comprehensive Test Cases: (All from test.hs plus some more to test in console)
 
 ## Test Arith with variables.
 ```haskell
