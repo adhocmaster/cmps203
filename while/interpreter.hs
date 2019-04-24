@@ -11,7 +11,12 @@ evalArith (IntExp n) = n
 evalBool :: B -> Bool
 evalBool (BoolExp any) = any 
 
-evalStmt :: C -> IO ()
-evalStmt (Skip a) = putStrLn "Skipped"
-evalStmt (Assign name value) = do
-    putStrLn "Assign called"
+evalStmt :: (C, S) -> S
+evalStmt (Skip _, s) = s
+evalStmt (Assign name e, s) = Map.insert name ( evalArith(e) ) s
+evalStmt (Seq c1 c2, s) =
+    let s1 = evalStmt(c1, s)
+    in evalStmt(c2, s1)
+
+
+

@@ -7,7 +7,7 @@ import qualified Data.Void as Void
 
 import Data.Maybe as Maybe
 
-type State = Map.Map String Int
+type S = Map.Map String Int
 type Var = String
 
 data E = IntExp Int
