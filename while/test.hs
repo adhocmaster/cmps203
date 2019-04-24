@@ -62,3 +62,6 @@ testInc =
     let s = evalStmt  ((Assign ("x") (IntExp 2)), Map.empty)
         s2 = evalStmt(Inc "x",s)
     in (s2 Map.! "x" == 3) == True
+
+testAll :: Bool
+testAll = testAssignAndArith && testAssignment && testBoolean && testIf && testInc && testRemainder && testWhile

@@ -4,7 +4,6 @@ import AST
 import qualified Data.Map as Map
 import Debug.Trace
 
-s = Map.empty
 
 evalArith :: (E, S) -> Int
 evalArith (IntExp n, s) = n

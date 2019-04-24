@@ -3,10 +3,6 @@ module AST where
 import Data.Map (Map, (!))
 import qualified Data.Map as Map
 
-import qualified Data.Void as Void
-
-import Data.Maybe as Maybe
-
 type S = Map.Map String Int
 type Var = String
 
