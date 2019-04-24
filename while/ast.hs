@@ -15,6 +15,7 @@ data E = IntExp Int
         | SumExp E E
         | SubExp E E
         | MulExp E E
+        | RemExp E E
 
 data B = BoolExp Bool
         | EQExp E E
@@ -29,3 +30,4 @@ data C = Skip Bool
         | Seq C C
         | If B C C
         | While B C
+        | Inc Var

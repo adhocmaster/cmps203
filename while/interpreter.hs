@@ -1,7 +1,6 @@
 module Interpreter where 
 import AST
 
-import Data.Void
 import qualified Data.Map as Map
 import Debug.Trace
 
@@ -15,6 +14,9 @@ evalArith (VarExp name, s)
 evalArith (SumExp e1 e2, s) = (evalArith (e1, s)) + (evalArith (e2, s))
 evalArith (SubExp e1 e2, s) = (evalArith (e1, s)) - (evalArith (e2, s))
 evalArith (MulExp e1 e2, s) = (evalArith (e1, s)) * (evalArith (e2, s))
+evalArith (RemExp e1 e2, s)
+    | evalArith (e2, s) == 0 = error ( "Division by 0" )
+    | otherwise = (evalArith (e1, s)) `rem` (evalArith (e2, s))
 
 evalBool :: (B, S) -> Bool
 evalBool (BoolExp any, s) = any 
@@ -36,7 +38,11 @@ evalStmt (If cond c1 c2, s)
     | otherwise = evalStmt(c2, s)
 
 evalStmt (While cond c, s)
-    | (evalBool(cond,s )) == True = trace("trace after loop s: " ++ show s) $ evalStmt(While cond c, (evalStmt(c, s)))
+    | (evalBool(cond,s )) == True = trace("trace before loop s: " ++ show s) $ evalStmt(While cond c, (evalStmt(c, s)))
     | otherwise = s
+
+evalStmt (Inc name, s)
+    | ( Map.lookup name s ) == Nothing = error ( "Undefined variable: " ++ name )
+    | otherwise = Map.insert name (s Map.! name + 1) s
 
 
