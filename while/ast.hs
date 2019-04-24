@@ -11,7 +11,7 @@ type S = Map.Map String Int
 type Var = String
 
 data E = IntExp Int
-        | X Var
+        | VarExp Var
         | SumExp E E
         | SubExp E E
         | MulExp E E
