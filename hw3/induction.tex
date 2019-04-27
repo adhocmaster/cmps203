@@ -1,4 +1,4 @@
-\documentclass[a4paper, 10pt]{article}
+\documentclass[a4paper, 11pt]{article}
 \usepackage{amssymb}
 \usepackage{bussproofs}
 \usepackage{charter}
@@ -18,10 +18,27 @@
 \end{prooftree}
 
 \section{Problem 1}
-\subsection{t := x; x := y; y := t}
-\subsection{t := y; y := x; x := t}
 
+\subsection{Question}
+In the WHILE language, prove or disprove the equivalence of the two commands:
+$$t := x; x := y; y := t$$
+and
+$$t := y; y := x; x := t$$
+(where x; y, and t are distinct locations).
+\subsection{Answer}
+We can disprove it with a counter example with a state $s$ in which two sequences 
+yield different results.
+
+Let 
+$$s = [t\rightarrow0, x\rightarrow5, y\rightarrow100]$$
+
+Then,
+$$ \langle t := x; x := y; y := t, s \rangle \Downarrow s[t\rightarrow5, x\rightarrow100, y\rightarrow5] $$
+$$ \langle t := y; y := x; x := t, s \rangle \Downarrow s[t\rightarrow100, x\rightarrow100, y\rightarrow5] $$
+So, location, $t$, has different values after execution of the sequences under this $s$.
 \section{Problem 2}
+
+\subsection{Question}
 In the WHILE language, prove that if
 
 \begin{prooftree}
@@ -32,7 +49,14 @@ then there exists an integer k such that
 Please make it explicit if/when you reason by induction on derivations, stating your induction hypoth-
 esis.
 
+\subsection{Answer}
+
 \section{Problem 3}
+
+\subsection{Question}
 In the WHILE language, prove:
-$$\forall c1, c2, c3 : c1; (c2; c3) \approx (c1; c2); c3$$
+$$\forall c1, c2, c3 : c1; (c2; c3) \equiv (c1; c2); c3$$
+
+\subsection{Answer}
+
 \end{document}
