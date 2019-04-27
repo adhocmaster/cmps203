@@ -1,0 +1,38 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage{amssymb}
+\usepackage{bussproofs}
+\usepackage{charter}
+\usepackage[top=1in, bottom=1.25in, left=1in, right=1in]{geometry}
+
+\title{HW3: Induction}
+\author{Golam Md Muktadir}
+\begin{document}
+\maketitle
+
+\begin{prooftree}
+  \AxiomC{$\langle x,\sigma \rangle \Downarrow \sigma(x)$}
+  \AxiomC{$\langle y,\sigma \rangle \Downarrow \sigma(y)$}
+  \AxiomC{$\langle z,\sigma \rangle \Downarrow \sigma(z)$}
+  \BinaryInfC{$\langle y + z,\sigma \rangle \Downarrow \sigma(y) + \sigma(z)$}
+  \BinaryInfC{$\langle x * (y + z),\sigma \rangle \Downarrow \sigma(x) * (\sigma(y)+\sigma(z))$}
+\end{prooftree}
+
+\section{Problem 1}
+\subsection{t := x; x := y; y := t}
+\subsection{t := y; y := x; x := t}
+
+\section{Problem 2}
+In the WHILE language, prove that if
+
+\begin{prooftree}
+  \AxiomC{$\langle \textrm{while b do } y := y-x, s \rangle \Downarrow s'$}
+\end{prooftree}
+then there exists an integer k such that
+  $$s(y) = s'(y) + k * s(x)$$
+Please make it explicit if/when you reason by induction on derivations, stating your induction hypoth-
+esis.
+
+\section{Problem 3}
+In the WHILE language, prove:
+$$\forall c1, c2, c3 : c1; (c2; c3) \approx (c1; c2); c3$$
+\end{document}
