@@ -51,6 +51,30 @@ esis.
 
 \subsection{Answer}
 
+\textbf{Assuming x > 0}
+We can reformulate the problem as,
+Let,
+\\* $W = \textrm{while b do }y := y-x$ 
+\\* Let, $\sigma_i = \sigma[y - (k-i)*x]$
+\\* Let, $b = y \ge (y - k*x)$
+\\* Claim: $ \langle W, \sigma_i \rangle \Downarrow \sigma_o, \forall i \in N $
+\\* \\*
+\textbf{Base case: $i = 0 \textrm{ or }  \langle W, \sigma_o \rangle \Downarrow \sigma_o $}
+Observation, b evaluates to false at state $\sigma_o$
+\begin{prooftree}
+
+  \AxiomC{$\sigma_o(y) = y - k*x$}
+  \AxiomC{$\langle y=y-x, \sigma_o \rangle \Downarrow (y - k*x - x)$}
+  \BinaryInfC{$y \ge (y - k*x), \sigma \Downarrow false$}
+  \UnaryInfC{$\langle W, \sigma_o \rangle \Downarrow \sigma_o $}
+  
+\end{prooftree} 
+So, base case holds.
+\\*
+\textbf{Inductive case:}
+\\*
+\textbf{Notes:}
+for x<0, same proof can be done by setting $b = y \le (y - k*x)$, and for x=0, the solution is trivial.
 \section{Problem 3}
 
 \subsection{Question}
