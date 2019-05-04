@@ -51,7 +51,26 @@ esis.
 
 \subsection{Answer}
 
-\textbf{Assuming x > 0}
+We can prove it by induction on k. Let us define
+
+$\sigma_i = s[y := y -i*x]$
+\\* So,
+\\* $\sigma_o = s$
+\\* $\sigma_k = s[y := y -k*x]$
+\\* Now, $\sigma_k = s\prime$ if we assume while terminates after k-th loop.
+\\* \textbf{Base case: $i = 0 $}
+
+\begin{prooftree}
+
+  \AxiomC{$\langle b, \sigma_o \rangle \Downarrow false$}
+  \AxiomC{$\langle skip, \sigma_o \rangle \Downarrow \sigma_o$}
+  \BinaryInfC{$\langle  W, \sigma_o \rangle \Downarrow \sigma_o$}
+  
+\end{prooftree} 
+
+So, k = 0 and P(0) holds.
+
+\textbf{Assuming x $>$ 0}
 We can reformulate the problem as,
 Let,
 \\* $W = \textrm{while b do }y := y-x$ 
