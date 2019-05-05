@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1557028251 "f:/myProjects/cmps203/hw3/induction.tex" "f:/myProjects/cmps203/hw3/induction.pdf" "induction" 1557028251
+["pdflatex"] 1557037095 "f:/myProjects/cmps203/hw3/induction.tex" "f:/myProjects/cmps203/hw3/induction.pdf" "induction" 1557037095
   "bussproofs.sty" 1556321713 39800 7faeb40527967b55e617c94cf6a79f11 ""
   "d:/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc" 1552429498 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "d:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1552429564 3332 103109f5612ad95229751940c61aada0 ""
@@ -56,13 +56,13 @@
   "d:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1552430360 327955 fcd08bd2fe8ea8269ecff8b536745f0e ""
   "d:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1552430382 929231 30ea938defb233ad0ca203df4bba7889 ""
   "d:/texlive/2018/texmf.cnf" 1552430358 673 4ae7b2f49cee444c5343a45b5d0f169c ""
-  "f:/myProjects/cmps203/hw3/induction.aux" 1557028251 881 4ec81c845df83a8c3e97b959e608753c ""
-  "f:/myProjects/cmps203/hw3/induction.tex" 1557028251 3811 9aa431743fe6857ea181dd188ba3159d ""
-  "induction.aux" 1557028251 881 4ec81c845df83a8c3e97b959e608753c ""
-  "induction.tex" 1557028251 3811 9aa431743fe6857ea181dd188ba3159d ""
+  "f:/myProjects/cmps203/hw3/induction.aux" 1557037095 881 4ec81c845df83a8c3e97b959e608753c ""
+  "f:/myProjects/cmps203/hw3/induction.tex" 1557037094 6301 3ca59487715424fe02d118ed33adfafa ""
+  "induction.aux" 1557037095 881 4ec81c845df83a8c3e97b959e608753c ""
+  "induction.tex" 1557037094 6301 3ca59487715424fe02d118ed33adfafa ""
   (generated)
-  "induction.pdf"
-  "f:/myProjects/cmps203/hw3/induction.pdf"
-  "induction.log"
-  "induction.aux"
   "f:/myProjects/cmps203/hw3/induction.log"
+  "f:/myProjects/cmps203/hw3/induction.pdf"
+  "induction.aux"
+  "induction.pdf"
+  "induction.log"

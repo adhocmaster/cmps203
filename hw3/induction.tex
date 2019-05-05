@@ -54,11 +54,11 @@ esis.
 We can prove it by induction on the derivation of while command.\newline 
 Let us define, 
 
-W = $ \textrm{while b do } y := y-x $
+W $\doteq \textrm{while b do } y := y-x $
 
-$\sigma_i = s[y := y -(k-i)*x]$
+$\sigma_i \doteq s[y := y -(k-i)*x]$
 
-P(n) := $ \langle W, \sigma_n \rangle \Downarrow \sigma_o$ \newline
+P(n) $\doteq \langle W, \sigma_n \rangle \Downarrow \sigma_o$ \newline
 So,
 
 $\sigma_o = s[y := y -k*x] = s'$
@@ -111,8 +111,62 @@ $\Rightarrow s(y) = s'(y) + k*x $ (Proved)
 
 \subsection{Question}
 In the WHILE language, prove:
-$$\forall c1, c2, c3 : c1; (c2; c3) \equiv (c1; c2); c3$$
+$$\forall c1, c2, c3 : c1; (c2; c3) \approx (c1; c2); c3$$
 
 \subsection{Answer}
 
+$\langle  \rangle \Downarrow $
+\begin{prooftree}
+      \AxiomC{$\langle c1, s_o \rangle \Downarrow s'$}
+        \AxiomC{$\langle skip, s' \rangle \Downarrow s'$}
+          \AxiomC{$\langle c1, s' \rangle \Downarrow s''$}
+          \AxiomC{$\langle c2, s'' \rangle \Downarrow s $}
+        \BinaryInfC{$\langle c2, c3, s' \rangle \Downarrow s$}
+      \RightLabel{\scriptsize(seq)}
+      \BinaryInfC{$LS': \langle (c2, c3), s' \rangle \Downarrow s$}
+    \LeftLabel{LS:} \RightLabel{\scriptsize(seq)}
+    \BinaryInfC{$\langle c1; (c2; c3), s_o \rangle \Downarrow s$}
+  
+\end{prooftree}
+So, replacing LS' with commands changing states only in its derivation sequence, we get
+
+\begin{prooftree}
+  \AxiomC{$ L1: \langle c1, s_o \rangle \Downarrow s'$}
+  \AxiomC{$ L2: \langle c1, s' \rangle \Downarrow s''$}
+  \AxiomC{$ L3: \langle c2, s'' \rangle \Downarrow s $}
+\LeftLabel{LS:} \RightLabel{\scriptsize(seq)}
+\TrinaryInfC{$\langle c1; (c2; c3), s_o \rangle \Downarrow s$}
+
+\end{prooftree}
+
+\begin{prooftree}
+        \AxiomC{$\langle skip, s_o \rangle \Downarrow s_o$}
+          \AxiomC{$\langle c1, s_o \rangle \Downarrow t'$}
+          \AxiomC{$\langle c2, t' \rangle \Downarrow t''$}
+        \BinaryInfC{$\langle c2, c3, s_o \rangle \Downarrow t'$}
+      \RightLabel{\scriptsize(seq)}
+      \BinaryInfC{$RS': \langle (c1, c2), s_o \rangle \Downarrow t''$}
+      \AxiomC{$\langle c3, t'' \rangle \Downarrow t$}
+    \LeftLabel{RS:}
+    \BinaryInfC{$\langle (c1; c2); c3, s_o \rangle \Downarrow t$}
+  
+\end{prooftree}
+So, replacing RS' with commands changing states only in its derivation sequence, we get
+
+\begin{prooftree}
+    \AxiomC{$ R1: \langle c1, s_o \rangle \Downarrow t'$}
+    \AxiomC{$ R2: \langle c2, t' \rangle \Downarrow t''$}
+    \AxiomC{$ R3: \langle c3, t'' \rangle \Downarrow t$}
+  \LeftLabel{RS:}
+  \TrinaryInfC{$\langle (c1; c2); c3, s_o \rangle \Downarrow t$}
+
+\end{prooftree}
+Now, because of determinism of L1 and R1, we have, \newline
+$ s' = t' $\newline
+$\Rightarrow R2 = \langle c2, s' \rangle \Downarrow t''$\newline
+$\Rightarrow s'' = t'' $ {\scriptsize(determinisim of L2 and R2)} \newline
+$\Rightarrow R3 = \langle c3, s'' \rangle \Downarrow t$\newline
+$\Rightarrow s = t $ {\scriptsize(determinisim of L3 and R3)} \newline
+Thus, $\langle c1; (c2; c3), s_o \rangle \Downarrow s \approx \langle (c1; c2); c3, s_o \rangle \Downarrow t$\newline
+$\Rightarrow c1; (c2; c3) \approx (c1; c2); c3$ (Proved)
 \end{document}
