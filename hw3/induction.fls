@@ -58,14 +58,14 @@ INPUT d:/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchr7t.tfm
+INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm
+INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmex10.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchr7t.tfm
-INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm
-INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchb7t.tfm
 OUTPUT f:/myProjects/cmps203/hw3/induction.pdf
 INPUT d:/texlive/2018/texmf-dist/fonts/vf/bitstrea/charter/bchr7t.vf
 INPUT d:/texlive/2018/texmf-dist/fonts/tfm/bitstrea/charter/bchr8r.tfm

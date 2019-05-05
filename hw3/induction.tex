@@ -9,16 +9,7 @@
 \begin{document}
 \maketitle
 
-\begin{prooftree}
-  \AxiomC{$\langle x,\sigma \rangle \Downarrow \sigma(x)$}
-  \AxiomC{$\langle y,\sigma \rangle \Downarrow \sigma(y)$}
-  \AxiomC{$\langle z,\sigma \rangle \Downarrow \sigma(z)$}
-  \BinaryInfC{$\langle y + z,\sigma \rangle \Downarrow \sigma(y) + \sigma(z)$}
-  \BinaryInfC{$\langle x * (y + z),\sigma \rangle \Downarrow \sigma(x) * (\sigma(y)+\sigma(z))$}
-\end{prooftree}
-
 \section{Problem 1}
-
 \subsection{Question}
 In the WHILE language, prove or disprove the equivalence of the two commands:
 $$t := x; x := y; y := t$$
@@ -26,7 +17,7 @@ and
 $$t := y; y := x; x := t$$
 (where x; y, and t are distinct locations).
 \subsection{Answer}
-We can disprove it with a counter example with a state $s$ in which two sequences 
+We can disprove it with a counter example with a state, $s$, in which two sequences 
 yield different results.
 
 Let 
@@ -36,8 +27,8 @@ Then,
 $$ \langle t := x; x := y; y := t, s \rangle \Downarrow s[t\rightarrow5, x\rightarrow100, y\rightarrow5] $$
 $$ \langle t := y; y := x; x := t, s \rangle \Downarrow s[t\rightarrow100, x\rightarrow100, y\rightarrow5] $$
 So, location, $t$, has different values after execution of the sequences under this $s$.
-\section{Problem 2}
 
+\section{Problem 2}
 \subsection{Question}
 In the WHILE language, prove that if
 
@@ -52,6 +43,7 @@ esis.
 \subsection{Answer}
 
 We can prove it by induction on the derivation of while command.\newline 
+\\[1mm]
 Let us define, 
 
 W $\doteq \textrm{while b do } y := y-x $
@@ -77,7 +69,7 @@ $\sigma_k = s[y := y -x]$
 \end{prooftree} 
 So, P(0) holds.
 \\[5mm]
-\textbf{Induction case: $\forall i <= n, P(i)$ holds, $n \in \mathbb{N}$}
+\textbf{Induction case: $\forall i <= n, P(i)$ holds, $n \in \mathbb{N}.$}\newline
 We need to show that P(n+1) holds, too.
 
 \begin{prooftree}
@@ -99,13 +91,12 @@ Derivation of D2:
     \UnaryInfC{$\langle y := y - x, \sigma_{n+1} \rangle \Downarrow \sigma_n$}
   
 \end{prooftree}
-Now D' is true by our induction hypothesis. So, P(n+1) holds. 
+Now D' is true by our induction hypothesis. D1, D2, and D' produces $\sigma_o$ So, P(n+1) holds. 
 \\[5mm]
 So, we proved $\sigma_o$ to be our terminal state. We can see from the definition of it that,
-
 $\sigma_o(y) = s(y) - k*x $ \newline
 $\Rightarrow s'(y) = s(y) - k*x $\newline
-$\Rightarrow s(y) = s'(y) + k*x $ (Proved)
+$\Rightarrow s(y) = s'(y) + k*x $ (\textbf{Proved})
 
 \section{Problem 3}
 
@@ -115,12 +106,12 @@ $$\forall c1, c2, c3 : c1; (c2; c3) \approx (c1; c2); c3$$
 
 \subsection{Answer}
 
-$\langle  \rangle \Downarrow $
 \begin{prooftree}
       \AxiomC{$\langle c1, s_o \rangle \Downarrow s'$}
         \AxiomC{$\langle skip, s' \rangle \Downarrow s'$}
           \AxiomC{$\langle c1, s' \rangle \Downarrow s''$}
           \AxiomC{$\langle c2, s'' \rangle \Downarrow s $}
+        \RightLabel{\scriptsize(seq)}
         \BinaryInfC{$\langle c2, c3, s' \rangle \Downarrow s$}
       \RightLabel{\scriptsize(seq)}
       \BinaryInfC{$LS': \langle (c2, c3), s' \rangle \Downarrow s$}
@@ -143,11 +134,12 @@ So, replacing LS' with commands changing states only in its derivation sequence,
         \AxiomC{$\langle skip, s_o \rangle \Downarrow s_o$}
           \AxiomC{$\langle c1, s_o \rangle \Downarrow t'$}
           \AxiomC{$\langle c2, t' \rangle \Downarrow t''$}
-        \BinaryInfC{$\langle c2, c3, s_o \rangle \Downarrow t'$}
+        \RightLabel{\scriptsize(seq)}
+        \BinaryInfC{$\langle c1, c2, s_o \rangle \Downarrow t''$}
       \RightLabel{\scriptsize(seq)}
       \BinaryInfC{$RS': \langle (c1, c2), s_o \rangle \Downarrow t''$}
       \AxiomC{$\langle c3, t'' \rangle \Downarrow t$}
-    \LeftLabel{RS:}
+    \LeftLabel{RS:} \RightLabel{\scriptsize(seq)}
     \BinaryInfC{$\langle (c1; c2); c3, s_o \rangle \Downarrow t$}
   
 \end{prooftree}
@@ -168,5 +160,5 @@ $\Rightarrow s'' = t'' $ {\scriptsize(determinisim of L2 and R2)} \newline
 $\Rightarrow R3 = \langle c3, s'' \rangle \Downarrow t$\newline
 $\Rightarrow s = t $ {\scriptsize(determinisim of L3 and R3)} \newline
 Thus, $\langle c1; (c2; c3), s_o \rangle \Downarrow s \approx \langle (c1; c2); c3, s_o \rangle \Downarrow t$\newline
-$\Rightarrow c1; (c2; c3) \approx (c1; c2); c3$ (Proved)
+$\Rightarrow c1; (c2; c3) \approx (c1; c2); c3$ (\textbf{Proved})
 \end{document}
