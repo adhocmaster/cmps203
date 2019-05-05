@@ -51,49 +51,62 @@ esis.
 
 \subsection{Answer}
 
-We can prove it by induction on k. Let us define
+We can prove it by induction on the derivation of while command.\newline 
+Let us define, 
 
-$\sigma_i = s[y := y -i*x]$
-\\* So,
-\\* $\sigma_o = s$
-\\* $\sigma_k = s[y := y -k*x]$
-\\* Now, $\sigma_k = s\prime$ if we assume while terminates after k-th loop.
-\\* \textbf{Base case: $i = 0 $}
+W = $ \textrm{while b do } y := y-x $
 
+$\sigma_i = s[y := y -(k-i)*x]$
+
+P(n) := $ \langle W, \sigma_n \rangle \Downarrow \sigma_o$ \newline
+So,
+
+$\sigma_o = s[y := y -k*x] = s'$
+
+$\sigma_k = s[y := y -x]$ 
+\\[5mm]
+\textbf{Base case: $i = 0 $}
 \begin{prooftree}
 
   \AxiomC{$\langle b, \sigma_o \rangle \Downarrow false$}
   \AxiomC{$\langle skip, \sigma_o \rangle \Downarrow \sigma_o$}
-  \BinaryInfC{$\langle  W, \sigma_o \rangle \Downarrow \sigma_o$}
+    \LeftLabel{D:}
+    \RightLabel{\scriptsize( by $if_{sos}^{ff}, while_{sos}$ )}
+    \BinaryInfC{$\langle  W, \sigma_o \rangle \Downarrow \sigma_o$}
   
 \end{prooftree} 
+So, P(0) holds.
+\\[5mm]
+\textbf{Induction case: $\forall i <= n, P(i)$ holds, $n \in \mathbb{N}$}
+We need to show that P(n+1) holds, too.
 
-So, k = 0 and P(0) holds.
-
-\textbf{Assuming x $>$ 0}
-We can reformulate the problem as,
-Let,
-\\* $W = \textrm{while b do }y := y-x$ 
-\\* Let, $\sigma_i = \sigma[y - (k-i)*x]$
-\\* Let, $b = y \ge (y - k*x)$
-\\* Claim: $ \langle W, \sigma_i \rangle \Downarrow \sigma_o, \forall i \in N $
-\\* \\*
-\textbf{Base case: $i = 0 \textrm{ or }  \langle W, \sigma_o \rangle \Downarrow \sigma_o $}
-Observation, b evaluates to false at state $\sigma_o$
 \begin{prooftree}
-
-  \AxiomC{$\sigma_o(y) = y - k*x$}
-  \AxiomC{$\langle y=y-x, \sigma_o \rangle \Downarrow (y - k*x - x)$}
-  \BinaryInfC{$y \ge (y - k*x), \sigma \Downarrow false$}
-  \UnaryInfC{$\langle W, \sigma_o \rangle \Downarrow \sigma_o $}
   
-\end{prooftree} 
-So, base case holds.
-\\*
-\textbf{Inductive case:}
-\\*
-\textbf{Notes:}
-for x<0, same proof can be done by setting $b = y \le (y - k*x)$, and for x=0, the solution is trivial.
+  \AxiomC{$D1: \langle b, \sigma_o \rangle \Downarrow true$}
+  \AxiomC{$D2: \langle y := y - x, \sigma_{n+1} \rangle \Downarrow \sigma_n$}
+  \AxiomC{$D': \langle W, \sigma_n \rangle \Downarrow \sigma_o$}
+    \LeftLabel{D:}
+    \RightLabel{\scriptsize( by $while_{sos}$ )}
+    \TrinaryInfC{$\langle  W, \sigma_{n+1} \rangle \Downarrow \sigma_{o}$}
+  
+\end{prooftree}
+Derivation of D2:
+\begin{prooftree}
+  
+  \AxiomC{$\langle y := y - x, s[y := y -k*x + (n+1)*x] \rangle \rightarrow s[y := y -k*x + (n)*x]$}
+    \RightLabel{\scriptsize( by $ass_{sos}$ )}
+    \LeftLabel{D2:} 
+    \UnaryInfC{$\langle y := y - x, \sigma_{n+1} \rangle \Downarrow \sigma_n$}
+  
+\end{prooftree}
+Now D' is true by our induction hypothesis. So, P(n+1) holds. 
+\\[5mm]
+So, we proved $\sigma_o$ to be our terminal state. We can see from the definition of it that,
+
+$\sigma_o(y) = s(y) - k*x $ \newline
+$\Rightarrow s'(y) = s(y) - k*x $\newline
+$\Rightarrow s(y) = s'(y) + k*x $ (Proved)
+
 \section{Problem 3}
 
 \subsection{Question}
