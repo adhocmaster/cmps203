@@ -18,10 +18,13 @@ use super::b_expression::evalB;
 use C::*;
 #[derive(Debug)]
 pub enum C {
+    
+    Nil,
     Skip,
     Ass(Rc<String>, E),
     Seq(Box<C>, Box<C>),
-    Nil
+    If(B, Box<C>, Box<C>)
+
 }
 
 pub fn getStateString(s: &HashMap<Rc<String>, i32>) -> String {
@@ -60,29 +63,20 @@ pub fn evalSmallStep(c: C, s: &mut HashMap<Rc<String>, i32>) -> (C, &mut HashMap
     let (c2, mut s2) = match c {
 
         Nil => {
-            // print!("<skip, "); 
-            // printState(&s);
-            // println!(">");
             (Nil, s) 
-            },
+        },
 
         Skip => { 
-            // print!("<skip, "); 
-            // printState(&s);
-            // println!(">");
             (Nil, s) 
-            },
+        },
         
         Ass(var, e) => {
 
-            // let message = String::new();
-            let val = evalE(e);
-            // message.push_str( format!("Assign {} {}, ", var, val) ); 
+            let val = evalE(e, s);
             s.insert(var, val);
-            // printState(&s);
-            // message.push_str( format!(">") );
-            (Skip, s) // Fix this
-            },
+            (Skip, s) 
+
+        },
         Seq(c1, c2) => {
 
             let (c3, mut s1) = evalSmallStep(*c1, s);
@@ -90,6 +84,21 @@ pub fn evalSmallStep(c: C, s: &mut HashMap<Rc<String>, i32>) -> (C, &mut HashMap
             match c3 {
                 Nil => (*c2, s1),
                 _ => ( SeqExp(c3, *c2), s1 )
+            }
+
+        },
+        If(b, c1, c2) => {
+
+            let bVal = evalB(b, s);
+
+            if bVal == true {
+
+                (*c1, s)
+
+            } else {
+
+                (*c2, s)
+
             }
 
         }
@@ -145,5 +154,12 @@ pub fn Assign(var: &str, e: E) -> C {
 pub fn SeqExp(c1: C, c2: C) -> C {
 
     Seq( Box::new(c1), Box::new(c2) )
+
+}
+
+pub fn IfExp(b: B, c1: C, c2: C) -> C {
+
+    If(b, Box::new(c1), Box::new(c2) )
+
 
 }

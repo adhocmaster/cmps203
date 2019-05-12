@@ -1,3 +1,6 @@
+
+use std::collections::HashMap;
+use std::rc::Rc;
 #[allow(dead_code)]
 use E::*;
 
@@ -5,6 +8,7 @@ use E::*;
 pub enum E {
 
     IntE(i32),
+    VarE(Rc<String>),
     SumE(Box<E>, Box<E>),
     SubE(Box<E>, Box<E>),
     MulE(Box<E>, Box<E>)
@@ -12,14 +16,17 @@ pub enum E {
 }
 
 
-pub fn evalE(e: E) -> i32 {
+pub fn evalE(e: E, s: &mut HashMap<Rc<String>, i32>) -> i32 {
 
     let val = match e {
 
         IntE(n) => n,
-        SumE(e1, e2) => evalE(*e1) + evalE(*e2),
-        SubE(e1, e2) => evalE(*e1) - evalE(*e2),
-        MulE(e1, e2) => evalE(*e1) * evalE(*e2)
+        VarE(var) => {
+            *(s.get(&var).unwrap())
+        },
+        SumE(e1, e2) => evalE(*e1, s) + evalE(*e2, s),
+        SubE(e1, e2) => evalE(*e1, s) - evalE(*e2, s),
+        MulE(e1, e2) => evalE(*e1, s) * evalE(*e2, s)
 
     };
 
@@ -27,14 +34,20 @@ pub fn evalE(e: E) -> i32 {
 
 }
 
-pub fn SumExp(e1: E, e2:E) -> E {
-
-    SumE(Box::new(e1), Box::new(e2) )
-
-}
 pub fn IntExp(n:i32) -> E {
 
     IntE(n)
+
+}
+
+pub fn VarExp(var: &str) -> E {
+
+    VarE(Rc::new( String::from(var) ))
+    
+}
+pub fn SumExp(e1: E, e2:E) -> E {
+
+    SumE(Box::new(e1), Box::new(e2) )
 
 }
 pub fn SubExp(e1: E, e2:E) -> E {
