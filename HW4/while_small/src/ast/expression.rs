@@ -1,51 +1,49 @@
 #[allow(dead_code)]
-pub mod expression {
-    use E::*;
-    
-    #[derive(Debug)]
-    pub enum E {
+use E::*;
 
-        IntE(i32),
-        SumE(Box<E>, Box<E>),
-        SubE(Box<E>, Box<E>),
-        MulE(Box<E>, Box<E>)
+#[derive(Debug)]
+pub enum E {
 
-    }
+    IntE(i32),
+    SumE(Box<E>, Box<E>),
+    SubE(Box<E>, Box<E>),
+    MulE(Box<E>, Box<E>)
 
-    pub fn evalE(e: E) -> i32 {
+}
 
-        let val = match e {
 
-            IntE(n) => n,
-            SumE(e1, e2) => evalE(*e1) + evalE(*e2),
-            SubE(e1, e2) => evalE(*e1) - evalE(*e2),
-            MulE(e1, e2) => evalE(*e1) * evalE(*e2)
+pub fn evalE(e: E) -> i32 {
 
-        };
+    let val = match e {
 
-        val
+        IntE(n) => n,
+        SumE(e1, e2) => evalE(*e1) + evalE(*e2),
+        SubE(e1, e2) => evalE(*e1) - evalE(*e2),
+        MulE(e1, e2) => evalE(*e1) * evalE(*e2)
 
-    }
+    };
 
-    pub fn SumExp(e1: E, e2:E) -> E {
+    val
 
-        SumE(Box::new(e1), Box::new(e2) )
+}
 
-    }
-    pub fn IntExp(n:i32) -> E {
+pub fn SumExp(e1: E, e2:E) -> E {
 
-        IntE(n)
+    SumE(Box::new(e1), Box::new(e2) )
 
-    }
-    pub fn SubExp(e1: E, e2:E) -> E {
+}
+pub fn IntExp(n:i32) -> E {
 
-        SubE(Box::new(e1), Box::new(e2) )
+    IntE(n)
 
-    }
-    pub fn MulExp(e1: E, e2:E) -> E {
+}
+pub fn SubExp(e1: E, e2:E) -> E {
 
-        MulE(Box::new(e1), Box::new(e2) )
+    SubE(Box::new(e1), Box::new(e2) )
 
-    }
+}
+pub fn MulExp(e1: E, e2:E) -> E {
+
+    MulE(Box::new(e1), Box::new(e2) )
 
 }
