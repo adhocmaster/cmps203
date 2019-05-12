@@ -43,10 +43,15 @@ fn main() {
 
     let c1 = Assign("x", IntExp(3));
 
-    let mut s2 = evalC(Skip, &mut s);
-    let mut s3 = evalC(c1, &mut s2);
+    let mut s1 = evalBySmallSteps(Skip, &mut s);
+    let mut s2 = evalBySmallSteps(c1, &mut s1);
 
     let c1 = Assign("y", IntExp(3));
-    let mut s3 = evalC(c1, &mut s3);
+    let mut s3 = evalBySmallSteps(c1, &mut s2);
+
+    // println!("{:?}", c2);
+    let c1 = SeqExp( Assign("y", IntExp(3)), Assign("z", IntExp(333)) );
+    let mut s3 = evalBySmallSteps(c1, &mut s3);
+    println!("");
 
 }
