@@ -1,6 +1,9 @@
 mod ast;
+use std::collections::HashMap;
 use crate::ast::expression::*;
 use crate::ast::b_expression::*;
+use crate::ast::command::*;
+use crate::ast::command::C::*;
 
 fn printB(any: B) {
     println!("");
@@ -35,4 +38,9 @@ fn main() {
 
     
     println!("");
+
+    let s = HashMap::new();
+
+    let s2 = evalC(Skip, s);
+
 }
