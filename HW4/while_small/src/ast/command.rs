@@ -6,6 +6,7 @@ data C = Skip Bool
         | While B C
         | Inc Var
         */
+use std::rc::Rc;
 use std::collections::HashMap;
 use super::expression::E;
 use super::expression::evalE;
@@ -18,21 +19,24 @@ use C::*;
 #[derive(Debug)]
 pub enum C {
     Skip,
-    Ass(E, E)
+    Ass(Rc<String>, E)
 }
 
-pub fn printState(s: &HashMap<&str, i32>) {
+pub fn printState(s: &HashMap<Rc<String>, i32>) {
 
     print!("{{");
 
+    let mut comma = "";
+
     for (k, v) in s.iter() {
-        print!( "{}:{}, ", k, v );
+        print!( "{}{}:{}", comma, k, v );
+        comma = ", ";
     }
 
     print!("}}");
 
 }
-pub fn evalC(c: C, s: HashMap<&str, i32>) -> HashMap<&str, i32> {
+pub fn evalC(c: C, s: &mut HashMap<Rc<String>, i32>) -> &mut HashMap<Rc<String>, i32> {
 
     let s2 = match c {
 
@@ -43,9 +47,11 @@ pub fn evalC(c: C, s: HashMap<&str, i32>) -> HashMap<&str, i32> {
             s 
             },
         
-        Ass(var, val) => {
+        Ass(var, e) => {
 
-            print!("<skip, "); 
+            let val = evalE(e);
+            print!("<Assign {} {}, ", var, val); 
+            s.insert(var, val);
             printState(&s);
             println!(">");
             s 
@@ -54,5 +60,11 @@ pub fn evalC(c: C, s: HashMap<&str, i32>) -> HashMap<&str, i32> {
     };
 
     s2
+
+}
+
+pub fn Assign(var: &str, e: E) -> C {
+
+    Ass(Rc::new( String::from(var) ), e)
 
 }

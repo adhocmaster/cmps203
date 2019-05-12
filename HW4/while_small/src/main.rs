@@ -39,8 +39,14 @@ fn main() {
     
     println!("");
 
-    let s = HashMap::new();
+    let mut s = HashMap::new();
 
-    let s2 = evalC(Skip, s);
+    let c1 = Assign("x", IntExp(3));
+
+    let mut s2 = evalC(Skip, &mut s);
+    let mut s3 = evalC(c1, &mut s2);
+
+    let c1 = Assign("y", IntExp(3));
+    let mut s3 = evalC(c1, &mut s3);
 
 }
