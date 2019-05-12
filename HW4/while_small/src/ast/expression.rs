@@ -5,6 +5,7 @@ use std::rc::Rc;
 use E::*;
 
 #[derive(Debug)]
+#[derive(Clone)]
 pub enum E {
 
     IntE(i32),
@@ -43,7 +44,7 @@ pub fn IntExp(n:i32) -> E {
 pub fn VarExp(var: &str) -> E {
 
     VarE(Rc::new( String::from(var) ))
-    
+
 }
 pub fn SumExp(e1: E, e2:E) -> E {
 

@@ -8,7 +8,7 @@ use super::expression::evalE;
 use B::*;
 
 #[derive(Debug)]
-
+#[derive(Clone)]
 pub enum B {
     BoolE(bool),
     EQB(Box<E>, Box<E>),

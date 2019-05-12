@@ -50,6 +50,21 @@ fn testCommand() {
 
     let program = SeqExp( preC, ifExp );
     let mut s = evalBySmallSteps(program, &mut s);
+
+    // 4. While
+    
+    let mut s = HashMap::new();
+    let incX = Assign( "x", 
+                        SumExp( VarExp("x"), IntExp(1) ) 
+                    );
+    let cond = LtExp( VarExp("x"), IntExp(5) );
+
+    let whileExp = WhileExp(cond, incX);
+
+    let preC = Assign("x", IntExp(0));
+
+    let program = SeqExp( preC, whileExp );
+    let mut s = evalBySmallSteps(program, &mut s);
     
 }
 

@@ -17,13 +17,15 @@ use super::b_expression::evalB;
 
 use C::*;
 #[derive(Debug)]
+#[derive(Clone)]
 pub enum C {
     
     Nil,
     Skip,
     Ass(Rc<String>, E),
     Seq(Box<C>, Box<C>),
-    If(B, Box<C>, Box<C>)
+    If(B, Box<C>, Box<C>),
+    While(B, Box<C>)
 
 }
 
@@ -77,27 +79,45 @@ pub fn evalSmallStep(c: C, s: &mut HashMap<Rc<String>, i32>) -> (C, &mut HashMap
             (Skip, s) 
 
         },
-        Seq(c1, c2) => {
+        Seq(c1Box, c2Box) => {
 
-            let (c3, mut s1) = evalSmallStep(*c1, s);
+            let (c3, mut s1) = evalSmallStep(*c1Box, s);
 
             match c3 {
-                Nil => (*c2, s1),
-                _ => ( SeqExp(c3, *c2), s1 )
+                Nil => (*c2Box, s1),
+                _ => ( SeqExp(c3, *c2Box), s1 )
             }
 
         },
-        If(b, c1, c2) => {
+        If(b, c1Box, c2Box) => {
 
             let bVal = evalB(b, s);
 
             if bVal == true {
 
-                (*c1, s)
+                (*c1Box, s)
 
             } else {
 
-                (*c2, s)
+                (*c2Box, s)
+
+            }
+
+        },
+        While(b, cBox) => {
+            let bClone = b.clone();
+
+            let bVal = evalB(b, s);
+
+            if bVal == true {
+
+                let cBoxClone = cBox.clone();
+
+                (SeqExp(*cBoxClone, While(bClone, cBox)), s)
+
+            } else {
+
+                (Skip, s)
 
             }
 
@@ -161,5 +181,10 @@ pub fn IfExp(b: B, c1: C, c2: C) -> C {
 
     If(b, Box::new(c1), Box::new(c2) )
 
+}
+
+pub fn WhileExp(b: B, c: C) -> C {
+
+    While(b, Box::new(c))
 
 }
