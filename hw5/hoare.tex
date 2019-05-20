@@ -1,22 +1,11 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage{bussproofs}
 \usepackage{listings}
 \usepackage{amssymb}
-\usepackage[total={10in, 7in}, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in, landscape]{geometry}
+\usepackage[total={20in, 7in}, top=0.5in, bottom=0.5in, left=0.1in, right=0.1in, landscape]{geometry}
 
 \renewcommand{\familydefault}{\sfdefault}
 \begin{document}
-  \begin{lstlisting}
-    { true }
-    z = 0;
-    sum = 0;
-    while i != x
-      i := i + 1;
-      sum := sum + y;
-    { sum = x * y }
-  \end{lstlisting}
-
-  Let $w$ be the while loop.
 
   \section{Question 1}
   Using Hoare's rules, prove:
@@ -26,17 +15,33 @@
   \begin{prooftree}
             \AxiomC{$x = y \Rightarrow true $}
                 \AxiomC{$\{x+1 = y +1\} x:= x+1 \{x = y + 1\} $}
-                \RightLabel{\scriptsize($ass_t$ rule)}
+                \RightLabel{\scriptsize($ass_p$ rule)}
             \UnaryInfC{$\{true\} x:= x+1 \{x = y +1\} $}
-            \RightLabel{\scriptsize($cons_t$)}
+            \RightLabel{\scriptsize($cons_p$)}
         \BinaryInfC{$\{x = y\} x:= x+1 \{x = y +1\} $}
-            \RightLabel{\scriptsize($ass_t$)}
+            \RightLabel{\scriptsize($ass_p$)}
             \AxiomC{$ \{[y+1/y](x=y)\} y:=y+1 \{x = y\} $}
         \UnaryInfC{$ \{x = y +1\} y:=y+1 \{x = y\} $}
-        \RightLabel{\scriptsize( $comp_t$ )}
+        \RightLabel{\scriptsize( $comp_p$ )}
     \BinaryInfC{$\{x = y\} x:= x+1; y:=y+1 \{x = y\}$}
   \end{prooftree}
-
+  \textbf{Note:} if we can do $x = y +1 \Rightarrow x-1=y$, the solution becomes easier.
+  \begin{prooftree}
+            \AxiomC{$x = y \Rightarrow true $}
+                \AxiomC{$\{[x+1/x](x-1 = y)\} x:= x+1 \{x-1 = y\} $}
+                \RightLabel{\scriptsize($ass_p$ rule)}
+            \UnaryInfC{$\{true\} x:= x+1 \{x-1 = y\} $}
+            \RightLabel{\scriptsize($cons_p$)}
+        \BinaryInfC{$\{x = y\} x:= x+1 \{x-1 = y\} $}
+            \AxiomC{$x - 1 = y\ \Rightarrow true$}
+            \RightLabel{\scriptsize($ass_p$)}
+                \AxiomC{$ \{[y+1/y](x=y)\} y:=y+1 \{x = y\} $}
+            \UnaryInfC{$ \{true\} y:=y+1 \{x = y\} $}
+            \RightLabel{\scriptsize( $cons_p$ )}
+        \BinaryInfC{$ \{x - 1 = y\} y:=y+1 \{x = y\} $}
+        \RightLabel{\scriptsize( $comp_p$ )}
+    \BinaryInfC{$\{x = y\} x:= x+1; y:=y+1 \{x = y\}$}
+  \end{prooftree}
   \section{Question 2}
   Using Hoare’s rules, prove
   $$ \{ y = z \}  \textrm{ while b do } y := y - x \{ \exists k. z = (y + k * x)\} $$
@@ -50,20 +55,29 @@
   \begin{prooftree}
         \AxiomC{$y = z \Rightarrow \exists j\exists k. y = z - j*x \wedge k = j + 1$}
             \AxiomC{${D1:}\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b\} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
-        \UnaryInfC{$\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \} W \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \wedge \neg b \}  $}
-    \BinaryInfC{$\{ y = z \} \textrm{ while b do } y := y - x \{ \exists k. z = (y + k * x)\} $}
+            \RightLabel{\scriptsize($while_p$)}
+        \UnaryInfC{$\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \} W \{ Q': \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \wedge \neg b \}  $}
+        \LeftLabel{D:}
+    \BinaryInfC{$\{ y = z \} \textrm{ while b do } y := y - x \{ Q: \exists k. z = (y + k * x)\} $}
       
-  \end{prooftree}
+  \end{prooftree} 
+  Now we show the proof of necessary parts: \\[3mm]
+  $ Q': \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \wedge \neg b$ \\
+  $\Rightarrow \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 $ \\
+  $\Rightarrow \exists k. y = z - k*x $ \\
+  $\Rightarrow \exists k. z = y + k*x $ \\
+  $= Q$
   \begin{prooftree}
         \AxiomC{$\exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b \Rightarrow true$}
             \AxiomC{$\{ [y/y-x](\exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1) \} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
+            \RightLabel{\scriptsize($ass_p$)}
         \UnaryInfC{$\{ true \} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
         \LeftLabel{D1:}
+        \RightLabel{\scriptsize($cons_p$)}
     \BinaryInfC{$\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b\} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
     
       
   \end{prooftree}
-
 
 
 \end{document}
