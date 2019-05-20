@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+\usepackage{bussproofs}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage[total={10in, 7in}, top=0.5in, bottom=0.5in, left=0.5in, right=0.5in, landscape]{geometry}
+
+\renewcommand{\familydefault}{\sfdefault}
+\begin{document}
+  \begin{lstlisting}
+    { true }
+    z = 0;
+    sum = 0;
+    while i != x
+      i := i + 1;
+      sum := sum + y;
+    { sum = x * y }
+  \end{lstlisting}
+
+  Let $w$ be the while loop.
+
+  \section{Question 1}
+  Using Hoare's rules, prove:
+  $$\{x = y\} x:= x+1; y:=y+1 \{x = y\}$$
+  \subsection{Answer}
+  Here all the rules belong to Hoare's rules for While. So, ignored the $\vdash$ in the triples.
+  \begin{prooftree}
+            \AxiomC{$x = y \Rightarrow true $}
+                \AxiomC{$\{x+1 = y +1\} x:= x+1 \{x = y + 1\} $}
+                \RightLabel{\scriptsize($ass_t$ rule)}
+            \UnaryInfC{$\{true\} x:= x+1 \{x = y +1\} $}
+            \RightLabel{\scriptsize($cons_t$)}
+        \BinaryInfC{$\{x = y\} x:= x+1 \{x = y +1\} $}
+            \RightLabel{\scriptsize($ass_t$)}
+            \AxiomC{$ \{[y+1/y](x=y)\} y:=y+1 \{x = y\} $}
+        \UnaryInfC{$ \{x = y +1\} y:=y+1 \{x = y\} $}
+        \RightLabel{\scriptsize( $comp_t$ )}
+    \BinaryInfC{$\{x = y\} x:= x+1; y:=y+1 \{x = y\}$}
+  \end{prooftree}
+
+  \section{Question 2}
+  Using Hoare’s rules, prove
+  $$ \{ y = z \}  \textrm{ while b do } y := y - x \{ \exists k. z = (y + k * x)\} $$
+  for an arbitrary boolean expression b.
+  \subsection{Answer}
+  Let's define W = $\textrm{ while b do } y := y - x $ \\
+  First we need to find the lopp invariant I so that we can apply the while rule. In this case the invariant is $x = n$ \\
+  Loop invariant: $\exists j\exists k. y = z - j*x \wedge k = j + 1$ \\
+
+
+  \begin{prooftree}
+        \AxiomC{$y = z \Rightarrow \exists j\exists k. y = z - j*x \wedge k = j + 1$}
+            \AxiomC{${D1:}\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b\} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
+        \UnaryInfC{$\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \} W \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \wedge \neg b \}  $}
+    \BinaryInfC{$\{ y = z \} \textrm{ while b do } y := y - x \{ \exists k. z = (y + k * x)\} $}
+      
+  \end{prooftree}
+  \begin{prooftree}
+    \AxiomC{$\exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b \Rightarrow true$}
+        \AxiomC{$\{ true \} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
+        \LeftLabel{D1:}
+    \BinaryInfC{$\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b\} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
+    
+      
+  \end{prooftree}
+
+
+
+\end{document}
