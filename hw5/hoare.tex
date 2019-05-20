@@ -55,8 +55,9 @@
       
   \end{prooftree}
   \begin{prooftree}
-    \AxiomC{$\exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b \Rightarrow true$}
-        \AxiomC{$\{ true \} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
+        \AxiomC{$\exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b \Rightarrow true$}
+            \AxiomC{$\{ [y/y-x](\exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1) \} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
+        \UnaryInfC{$\{ true \} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
         \LeftLabel{D1:}
     \BinaryInfC{$\{ \exists j\exists k. y = z - j*x \wedge k = j + 1 \wedge b\} y:=y-x \{ \exists j \exists k. y = z - (j+1)*x  \wedge k = j + 1 \}  $}
     
